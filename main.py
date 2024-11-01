@@ -1,3 +1,4 @@
+#test
 import arcade
 from maze import Maze
 from player import Player
