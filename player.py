@@ -20,5 +20,3 @@ class Player:
             if maze_layout[new_row][new_col] == 0:
                 self.row = new_row
                 self.col = new_col
-            elif maze_layout[new_row][new_col] == 2:
-                print("You encountered a door! Press 'E' to try opening it.")
