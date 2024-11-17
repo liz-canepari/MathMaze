@@ -1,4 +1,3 @@
-#test
 import arcade
 from maze import Maze
 from player import Player
@@ -12,8 +11,15 @@ class Main(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         arcade.set_background_color(arcade.color.GRAY)
-        self.maze = Maze()
-        self.player = Player(1, 1)
+        self.maze = Maze(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.player = Player(
+            start_row=1, 
+            start_col=1, 
+            cell_size=self.maze.cell_size, 
+            offset_x=self.maze.offset_x, 
+            offset_y=self.maze.offset_y,
+            maze_rows=len(self.maze.layout)
+        )
         self.movement = (0, 0)
         self.current_problem = None
         self.show_problem = False
@@ -36,6 +42,16 @@ class Main(arcade.Window):
             SCREEN_HEIGHT - 50,
             arcade.color.GRANNY_SMITH_APPLE,
             font_size=18,
+            anchor_x="center"
+        )
+            
+        if self.maze.layout[self.player.row][self.player.col] == 3:
+            arcade.draw_text(
+            "You Win!",
+            SCREEN_WIDTH / 2,
+            SCREEN_HEIGHT / 2,
+            arcade.color.GOLD,
+            font_size=36,
             anchor_x="center"
         )
 
@@ -163,6 +179,8 @@ class Main(arcade.Window):
         # Reduce the cooldown timer
         if self.movement_cooldown > 0:
             self.movement_cooldown -= delta_time
+        if self.maze.layout[self.player.row][self.player.col] == 3:
+            print("You Win!")
 
         # Allow movement only if cooldown has elapsed
         if self.movement_cooldown <= 0 and self.movement != (0, 0):
