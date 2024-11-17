@@ -12,14 +12,13 @@ class Main(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         arcade.set_background_color(arcade.color.GRAY)
         self.maze = Maze(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.player = Player(
-            start_row=1, 
-            start_col=1, 
-            cell_size=self.maze.cell_size, 
-            offset_x=self.maze.offset_x, 
+        self.player = Player(start_row=1,
+            start_col=1,
+            cell_size=self.maze.cell_size,
+            offset_x=self.maze.offset_x,
             offset_y=self.maze.offset_y,
             maze_rows=len(self.maze.layout)
-        )
+            )
         self.movement = (0, 0)
         self.current_problem = None
         self.show_problem = False
@@ -29,6 +28,7 @@ class Main(arcade.Window):
         self.movement_speed = 0.2
         self.feedback_message = ""
         self.feedback_timer = 0
+        self.show_win_message = False
 
     def on_draw(self):
         arcade.start_render()
@@ -40,20 +40,20 @@ class Main(arcade.Window):
             "You encountered a door! Press 'E' to try opening it.",
             SCREEN_WIDTH / 2,
             SCREEN_HEIGHT - 50,
-            arcade.color.GRANNY_SMITH_APPLE,
+            arcade.color.DARK_GREEN,
             font_size=18,
             anchor_x="center"
         )
-            
-        if self.maze.layout[self.player.row][self.player.col] == 3:
+        
+        if self.show_win_message:
             arcade.draw_text(
-            "You Win!",
+            "You found the exit!",
             SCREEN_WIDTH / 2,
             SCREEN_HEIGHT / 2,
             arcade.color.GOLD,
             font_size=36,
             anchor_x="center"
-        )
+            )
 
         if self.show_problem:
             rect_width = 400
@@ -179,8 +179,6 @@ class Main(arcade.Window):
         # Reduce the cooldown timer
         if self.movement_cooldown > 0:
             self.movement_cooldown -= delta_time
-        if self.maze.layout[self.player.row][self.player.col] == 3:
-            print("You Win!")
 
         # Allow movement only if cooldown has elapsed
         if self.movement_cooldown <= 0 and self.movement != (0, 0):
@@ -198,6 +196,12 @@ class Main(arcade.Window):
         self.door_position = self.is_near_door()
         self.show_door_message = bool(self.door_position)  # Show message if near a door
 
+        if self.is_near_goal():
+            print("You win!")
+            self.show_win_message = True
+
+
+
     def is_near_door(self):
         row, col = self.player.row, self.player.col
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)] 
@@ -206,6 +210,16 @@ class Main(arcade.Window):
             if 0 <= nearby_row < len(self.maze.layout) and 0 <= nearby_col < len(self.maze.layout[0]):
                 if self.maze.layout[nearby_row][nearby_col] == 2: 
                     return nearby_row, nearby_col
+        return False
+    
+    def is_near_goal(self):
+        row, col = self.player.row, self.player.col
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)] 
+        for dr, dc in directions:
+            nearby_row, nearby_col = row + dr, col + dc
+            if 0 <= nearby_row < len(self.maze.layout) and 0 <= nearby_col < len(self.maze.layout[0]):
+                if self.maze.layout[nearby_row][nearby_col] == 3: 
+                    return True
         return False
         
 def main():
