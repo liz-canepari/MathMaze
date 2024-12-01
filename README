@@ -1,0 +1,35 @@
+# Overview
+
+This project is an educational maze game designed to enhance my skills as a software engineer while creating an engaging and interactive learning experience. The game challenges players to navigate through a maze, solve math problems to open doors, and reach the goal to win. This project showcases my ability to design interactive applications, implement dynamic game mechanics, and use object-oriented programming principles.
+
+How to Play:
+
+Use the arrow keys to move your player through the maze.
+Encounter doors and solve math problems to unlock them.
+Reach the goal to win the game!
+The purpose of writing this software is to practice and refine my programming skills, including user interaction, graphical rendering, and game logic, while producing a project that is both functional and educational.
+
+{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the game being played and a walkthrough of the code.}
+
+[Software Demo Video](http://youtube.link.goes.here)
+
+# Development Environment
+
+This project was developed using the following tools and technologies:
+
+Programming Language: Python
+Libraries: Arcade for graphics and game logic
+
+# Useful Websites
+
+* [Arcade Library Documentation](https://api.arcade.academy/en/latest/)
+* [Python Official Documentation](https://docs.python.org/3/)
+
+# Future Work
+Here are some features and improvements I plan to work on:
+
+* Enhance Gameplay: Add multiple levels with increasing difficulty.
+* Add Sound Effects: Include background music and sound effects for a more immersive experience.
+* Save/Load Functionality: Allow players to save their progress and return later.
+* Improve Problem Generation: Make math problems more diverse and adaptive to the player’s skill level.
+* Polish Graphics: Enhance the visual design of the maze and player animations.
